@@ -24,9 +24,9 @@
  </OUTPUT_FILES>
  <LABELS>
   <SETUP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>77</LINE></SETUP>
-  <INIT_TMR0><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>150</LINE></INIT_TMR0>
-  <MAIN_LOOP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>110</LINE></MAIN_LOOP>
-  <SEVEN_SEGMENT_DISPLAY><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>162</LINE></SEVEN_SEGMENT_DISPLAY>
-  <END><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>248</LINE></END>
+  <INIT_TMR0><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>151</LINE></INIT_TMR0>
+  <MAIN_LOOP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>111</LINE></MAIN_LOOP>
+  <SEVEN_SEGMENT_DISPLAY><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>163</LINE></SEVEN_SEGMENT_DISPLAY>
+  <END><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>249</LINE></END>
  </LABELS>
 </ASSEMBLER_INFO>

@@ -33,7 +33,7 @@ Calculamos el tiempo máximo que puede contar TIMER0
 Tmax = (2**n * Prescaler) / f_clk = (2**8 * 1024) / 10E6 = 0.03s = 32 ms 
 
 Determinamos el valor inicial de TIMER0
-TCNT0 = 256 - (f_clk * t_deseado) / Prescaler = 256 - (10E6 * 0.02) / 128 = 156
+TCNT0 = 256 - (f_clk * t_deseado) / Prescaler = 256 - (10E6 * 0.02) / 128 = 99.75 = 100
 
 Con este cálculo el contador alcanza 100 ms directamente por cada conteo realizado.
 */
@@ -46,8 +46,7 @@ Con este cálculo el contador alcanza 100 ms directamente por cada conteo realiza
 
 // Definiciones
 .equ PRESCALER = (1<<CS02) |(1<<CS01) | (1<<CS00)	; Prescaler de TIMER0 (En este caso debe ser de 128)
-.equ TIMER_START = 158								; Valor inicial del Timer0
-.equ OVERFLOWS = 10									; Cantidad de desbordamientos para 100 ms
+.equ TIMER_START = 100								; Valor inicial del Timer0
 .def COUNTER_PORT = R20								; REGISTRO A MOSTRAR EN PUERTOS
 .def SEVENSD_OUT = R21								; Registro temporal
 
