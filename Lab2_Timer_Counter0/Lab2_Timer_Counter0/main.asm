@@ -5,9 +5,20 @@
 ; Author : mario
 ;
 
+/*
+PRESCALER NECESARIO
+t = 100 ms
+f = 16 MHz
+T = 0.0000000625 (Periodo con frecuencia original)
+
+*/
+
+
+// Encabezado
 .include "M328PDEF.inc"
 .cseg
 .org    0x0000
+.def	COUNTER = R20
 
 // Lookup Table para Display de 7 Segmentos
 .equ SEVENSD1 =	0b0010_0001
@@ -35,22 +46,18 @@ OUT     SPH, R16
 SETUP:
     // Activación de pines de entrada y salida en el puerto C
     LDI     R16, 0x0F	// Primeros cuatro bits como salidas y los primeros dos bits como entradas
-    OUT     DDRB, R16
+    OUT     DDRC, R16
     LDI     R16, 0xF0	// Activar Pull-ups en entradas y desactivar salidas inicialmente
-    OUT     PORTB, R16
-
-    // Activación de pines de salida en el puerto D
-    LDI     R16, 0xFF
-    OUT     DDRD, R16
-    LDI     R16, 0x00
-    OUT     PORTD, R16
+    OUT     PORTC, R16
 
     // Registros de contadores
-	LDI     R16, 0x00
-
+	CLR     R16
+	CLR		R17
 
 MAINLOOP:
 
 
-SEVEN_SEGMENT_DISPLAY:
-	
+DELAY:
+	CLR		R17
+
+		

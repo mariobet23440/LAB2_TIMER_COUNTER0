@@ -1,0 +1,30 @@
+<ASSEMBLER_INFO>
+ <VERSION>2.2.8</VERSION>
+ <DEVICE>"ATmega328P"</DEVICE>
+ <WORKING_DIR>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\Debug</WORKING_DIR>
+ <INCLUDE_PATH>
+  <DIR>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc</DIR>
+  <DIR>C:\Program Files (x86)\Atmel\Studio\7.0\toolchain\avr8\avrassembler\Include</DIR>
+  <DIR></DIR>
+ </INCLUDE_PATH>
+ <SOURCE_FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</SOURCE_FILE>
+ <INCLUDED_FILES>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc</FILE>
+  <FILE>C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc</FILE>
+ </INCLUDED_FILES>
+ <OBJECT_FILES>
+  <FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\Debug\Lab2_Timer_Counter0.obj</FILE>
+ </OBJECT_FILES>
+ <HEX_FILES>
+  <FILE>Lab2_Timer_Counter0.hex</FILE>
+ </HEX_FILES>
+ <OUTPUT_FILES>
+  <FILE>Lab2_Timer_Counter0.map</FILE>
+  <FILE>Lab2_Timer_Counter0.lss</FILE>
+ </OUTPUT_FILES>
+ <LABELS>
+  <SETUP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>46</LINE></SETUP>
+  <MAINLOOP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>57</LINE></MAINLOOP>
+  <DELAY><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>60</LINE></DELAY>
+ </LABELS>
+</ASSEMBLER_INFO>
