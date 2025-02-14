@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.2.8  C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm Fri Feb 14 17:36:19 2025
+AVRASM ver. 2.2.8  C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Prelab2\Prelab2\Prelab2\main.asm Fri Feb 14 17:21:55 2025
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm(42): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Prelab2\Prelab2\Prelab2\main.asm(31): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm(42): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Prelab2\Prelab2\Prelab2\main.asm(31): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
                                  
                                  ;
                                  
@@ -992,18 +992,7 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\La
                                  ; Created: 14/02/2025 00:07:08
                                  ; Author : mario
                                  ; Link a Github: https://github.com/mariobet23440/LAB2_TIMER_COUNTER0
-                                 
-                                 /*
-                                 - HISTORIAL DE VERSIONES -
-                                 
-                                 ENTREGA DE PRELAB: 14/02/2025 - 14:01
-                                 - Implementación del contador con TIMER0.
-                                 - Muestra el resultado del contador en los cuatro LEDs y en el display de 7 segmentos.
-                                 
-                                 ENTREGA DE LAB: 14/02/2024 - 18:55
-                                 - Implementación de contador con entradas
-                                 */
-                                 
+                                 ; ENTREGA DE PRELAB: 14/02/2025 - 14:01
                                  
                                  /*
                                  CONFIGUACIÓN DE TIMER0
@@ -1106,84 +1095,64 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\La
 000003 bf0e                      OUT     SPH, R16
                                  
                                  SETUP:
-                                 	// Activación de pines de salida en el puerto D
-000004 e000                          LDI     R16, 0x00	// Primeros cuatro bits como salidas y los primeros dos bits como entradas
-000005 b904                          OUT     DDRB, R16
-000006 ef0f                          LDI     R16, 0xFF	// Desactivar salidas inicialmente
-000007 b905                          OUT     PORTB, R16
-                                 	
-                                 	// Activación de pines de salida en el puerto C
-000008 ef0f                          LDI     R16, 0xFF	// Primeros cuatro bits como salidas y los primeros dos bits como entradas
-000009 b907                          OUT     DDRC, R16
-00000a ef00                          LDI     R16, 0xF0	// Activar Pull-ups en entradas y desactivar salidas inicialmente
-00000b b908                          OUT     PORTC, R16
+                                 	// Activación de pines de entrada y salida en el puerto C
+000004 e00f                          LDI     R16, 0x0F	// Primeros cuatro bits como salidas y los primeros dos bits como entradas
+000005 b907                          OUT     DDRC, R16
+000006 ef00                          LDI     R16, 0xF0	// Activar Pull-ups en entradas y desactivar salidas inicialmente
+000007 b908                          OUT     PORTC, R16
                                  
                                  	// Activación de pines de salida en el puerto D
-00000c ef0f                          LDI     R16, 0xFF	// Primeros cuatro bits como salidas y los primeros dos bits como entradas
-00000d b90a                          OUT     DDRD, R16
-00000e e000                          LDI     R16, 0x00	// Desactivar salidas inicialmente
-00000f b90b                          OUT     PORTD, R16
+000008 ef0f                          LDI     R16, 0xFF	// Primeros cuatro bits como salidas y los primeros dos bits como entradas
+000009 b90a                          OUT     DDRD, R16
+00000a e000                          LDI     R16, 0x00	// Desactivar salidas inicialmente
+00000b b90b                          OUT     PORTD, R16
                                  
                                  	// Configurar Prescaler Principal
-000010 e800                      	LDI		R16, (1 << CLKPCE)
-000011 9300 0061                 	STS     CLKPR, R16          // Habilitar cambio de PRESCALER
-000013 e004                          LDI     R16, 0x04			// CAMBIAR A 0X04
-000014 9300 0061                     STS     CLKPR, R16          // Configurar Prescaler a 1 Mhz
+00000c e800                      	LDI		R16, (1 << CLKPCE)
+00000d 9300 0061                 	STS     CLKPR, R16          // Habilitar cambio de PRESCALER
+00000f e004                          LDI     R16, 0x04			// CAMBIAR A 0X04
+000010 9300 0061                     STS     CLKPR, R16          // Configurar Prescaler a 1 Mhz
                                  
                                  	// Inicializar timer0
-000016 940e 002b                     CALL    INIT_TMR0
+000012 940e 0023                     CALL    INIT_TMR0
                                  
                                  	// Inicializar GPRs
-000018 2744                      	CLR		COUNTER_PORT
-000019 2755                      	CLR		SEVENSD_OUT
+000014 2744                      	CLR		COUNTER_PORT
+000015 2755                      	CLR		SEVENSD_OUT
                                  
                                  
                                  MAIN_LOOP:
                                      // Revisión de la bandera de Overflow en TIMER0
-00001a b305                      	IN      R16, TIFR0          // Leer registro de interrupción de TIMER0
-00001b ff00                          SBRS    R16, TOV0           // Salta si el bit 0 está "set" (TOV0 bit, Bandera de Overflow)
-00001c cffd                          RJMP    MAIN_LOOP           // Reiniciar loop
+000016 b305                      	IN      R16, TIFR0          // Leer registro de interrupción de TIMER0
+000017 ff00                          SBRS    R16, TOV0           // Salta si el bit 0 está "set" (TOV0 bit, Bandera de Overflow)
+000018 cffd                          RJMP    MAIN_LOOP           // Reiniciar loop
                                  	
                                  	// Si el reloj alcanza un desborde, se ejecuta el siguiente fragmento de código
-00001d 9aa8                      	SBI     TIFR0, TOV0         // Limpiar bandera de "overflow" (No se limpia automáticamente)
-00001e e90e                      	LDI     R16, TIMER_START    // Establecer el valor inicial del contador TCNT0
-00001f bd06                          OUT     TCNT0, R16          // Volver a cargar valor inicial en TCNT0 
+000019 9aa8                      	SBI     TIFR0, TOV0         // Limpiar bandera de "overflow" (No se limpia automáticamente)
+00001a e90e                      	LDI     R16, TIMER_START    // Establecer el valor inicial del contador TCNT0
+00001b bd06                          OUT     TCNT0, R16          // Volver a cargar valor inicial en TCNT0 
                                  
-                                 	// LAB - Incrementar y decrementar el contador con dos botones
-000020 b113                      	IN		R17, PINB				// Leer el valor de PINC
-000021 ff10                      	SBRS	R17, PB0
-000022 9543                      	INC		COUNTER_PORT
-000023 ff11                      	SBRS	R17, PB1
-000024 954a                      	DEC		COUNTER_PORT			// ¡Y listo! Eso era todo el lab xd
-                                 	
-                                 	/*
-                                 	¿Por qué esto ya tiene antirrebote?
-                                 	Observe que este segmento de código se ejecuta únicamente cuando la bandera TOV0 está activa.
-                                 	Por lo tanto el TIMER0 cuenta hasta que se active la bandera y hasta ese entonces el valor de los bits puede cambiar.
-                                 	No es necesario revisar dos veces y hacer un delay de por medio.
-                                 	*/
-                                 
-                                 	
                                  	// PRELAB - Mostrar en LEDs
-                                 	// Mostrar Contador en PORTC
-000025 704f                      	ANDI	COUNTER_PORT, 0X0F		// Truncar el valor obtenido a 4 bits
-000026 b948                      	OUT		PORTC, COUNTER_PORT	// Mostrar el resultado en PORTC
+                                 	// Contador en PORTC
+00001c 9543                      	INC		COUNTER_PORT			// Incrementar el valor de COUNTER_PORTC
+00001d 704f                      	ANDI	COUNTER_PORT, 0X0F		// Truncar el valor obtenido a 4 bits
+00001e b948                      	OUT		PORTC, COUNTER_PORT	// Mostrar el resultado en PORTC
                                  
                                  	// Mostrar en display de 7 segmentos
-000027 940e 0030                 	CALL	SEVEN_SEGMENT_DISPLAY
-000029 b95b                      	OUT		PORTD, SEVENSD_OUT
+00001f 940e 0028                 	CALL	SEVEN_SEGMENT_DISPLAY
+000021 b95b                      	OUT		PORTD, SEVENSD_OUT
                                  
-00002a cfef                      	RJMP    MAIN_LOOP			// Regresar a Mainloop
+000022 cff3                      	RJMP    MAIN_LOOP			// Regresar a Mainloop
                                  
                                  // RUTINAS NO DE INTERRUPCIÓN
                                  
                                  // Inicializar Timer0
                                  INIT_TMR0:
-00002b e005                          LDI     R16, PRESCALER				// Configurar un registro para setear las posiciones de CS01 y CS00
-00002c bd05                          OUT     TCCR0B, R16					// Setear prescaler del TIMER0 a 64 (CS01 = 1 y CS00 = 0)
-00002d e90e                          LDI     R16, TIMER_START			// Empezar el conteo con un valor de 100
-00002e bd06                          OUT     TCNT0, R16					// Cargar valor inicial en TCNT0
-00002f 9508                          RET
+000023 e005                          LDI     R16, PRESCALER				// Configurar un registro para setear las posiciones de CS01 y CS00
+000024 bd05                          OUT     TCCR0B, R16					// Setear prescaler del TIMER0 a 64 (CS01 = 1 y CS00 = 0)
+000025 e90e                          LDI     R16, TIMER_START			// Empezar el conteo con un valor de 100
+000026 bd06                          OUT     TCNT0, R16					// Cargar valor inicial en TCNT0
+000027 9508                          RET
                                  
                                  // Display de 7 segmentos
                                  /*
@@ -1191,89 +1160,89 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\La
                                  el display de 7 segmentos. Si el compare activa la bandera Z el programa regresará a MAINLOOP
                                  */
                                  SEVEN_SEGMENT_DISPLAY:
-000030 2755                      	CLR		SEVENSD_OUT	
+000028 2755                      	CLR		SEVENSD_OUT	
                                  	
                                  	// Revisar si el contador es 0	
-000031 e757                      	LDI		SEVENSD_OUT, SEVENSD0
-000032 3040                      	CPI		COUNTER_PORT, 0
-000033 f171                      	BREQ	END
+000029 e757                      	LDI		SEVENSD_OUT, SEVENSD0
+00002a 3040                      	CPI		COUNTER_PORT, 0
+00002b f171                      	BREQ	END
                                  
                                  	// Revisar si el contador es 1	
-000034 e451                      	LDI		SEVENSD_OUT, SEVENSD1
-000035 3041                      	CPI		COUNTER_PORT, 1
-000036 f159                      	BREQ	END
+00002c e451                      	LDI		SEVENSD_OUT, SEVENSD1
+00002d 3041                      	CPI		COUNTER_PORT, 1
+00002e f159                      	BREQ	END
                                  
                                  	// Revisar si el contador es 2	
-000037 e35b                      	LDI		SEVENSD_OUT, SEVENSD2
-000038 3042                      	CPI		COUNTER_PORT, 2
-000039 f141                      	BREQ	END
+00002f e35b                      	LDI		SEVENSD_OUT, SEVENSD2
+000030 3042                      	CPI		COUNTER_PORT, 2
+000031 f141                      	BREQ	END
                                  
                                  	// Revisar si el contador es 3	
-00003a e65b                      	LDI		SEVENSD_OUT, SEVENSD3
-00003b 3043                      	CPI		COUNTER_PORT, 3
-00003c f129                      	BREQ	END
+000032 e65b                      	LDI		SEVENSD_OUT, SEVENSD3
+000033 3043                      	CPI		COUNTER_PORT, 3
+000034 f129                      	BREQ	END
                                  
                                  	// Revisar si el contador es 4
-00003d e45d                      	LDI		SEVENSD_OUT, SEVENSD4
-00003e 3044                      	CPI		COUNTER_PORT, 4
-00003f f111                      	BREQ	END
+000035 e45d                      	LDI		SEVENSD_OUT, SEVENSD4
+000036 3044                      	CPI		COUNTER_PORT, 4
+000037 f111                      	BREQ	END
                                  
                                  	// Revisar si el contador es 5	
-000040 e65e                      	LDI		SEVENSD_OUT, SEVENSD5
-000041 3045                      	CPI		COUNTER_PORT, 5
-000042 f0f9                      	BREQ	END
+000038 e65e                      	LDI		SEVENSD_OUT, SEVENSD5
+000039 3045                      	CPI		COUNTER_PORT, 5
+00003a f0f9                      	BREQ	END
                                  
                                  	// Revisar si el contador es 6	
-000043 e75e                      	LDI		SEVENSD_OUT, SEVENSD6
-000044 3046                      	CPI		COUNTER_PORT, 6
-000045 f0e1                      	BREQ	END
+00003b e75e                      	LDI		SEVENSD_OUT, SEVENSD6
+00003c 3046                      	CPI		COUNTER_PORT, 6
+00003d f0e1                      	BREQ	END
                                  
                                  	// Revisar si el contador es 0	
-000046 e453                      	LDI		SEVENSD_OUT, SEVENSD7
-000047 3047                      	CPI		COUNTER_PORT, 7
-000048 f0c9                      	BREQ	END
+00003e e453                      	LDI		SEVENSD_OUT, SEVENSD7
+00003f 3047                      	CPI		COUNTER_PORT, 7
+000040 f0c9                      	BREQ	END
                                  
                                  	// Revisar si el contador es 8	
-000049 e75f                      	LDI		SEVENSD_OUT, SEVENSD8
-00004a 3048                      	CPI		COUNTER_PORT, 8
-00004b f0b1                      	BREQ	END
+000041 e75f                      	LDI		SEVENSD_OUT, SEVENSD8
+000042 3048                      	CPI		COUNTER_PORT, 8
+000043 f0b1                      	BREQ	END
                                  
                                  	// Revisar si el contador es 9	
-00004c e45f                      	LDI		SEVENSD_OUT, SEVENSD9
-00004d 3049                      	CPI		COUNTER_PORT, 9
-00004e f099                      	BREQ	END
+000044 e45f                      	LDI		SEVENSD_OUT, SEVENSD9
+000045 3049                      	CPI		COUNTER_PORT, 9
+000046 f099                      	BREQ	END
                                  
                                  	// Revisar si el contador es A	
-00004f e55f                      	LDI		SEVENSD_OUT, SEVENSDA
-000050 304a                      	CPI		COUNTER_PORT, 10
-000051 f081                      	BREQ	END
+000047 e55f                      	LDI		SEVENSD_OUT, SEVENSDA
+000048 304a                      	CPI		COUNTER_PORT, 10
+000049 f081                      	BREQ	END
                                  
                                  	// Revisar si el contador es B	
-000052 e75c                      	LDI		SEVENSD_OUT, SEVENSDB
-000053 304b                      	CPI		COUNTER_PORT, 11
-000054 f069                      	BREQ	END
+00004a e75c                      	LDI		SEVENSD_OUT, SEVENSDB
+00004b 304b                      	CPI		COUNTER_PORT, 11
+00004c f069                      	BREQ	END
                                  
                                  	// Revisar si el contador es 12	
-000055 e356                      	LDI		SEVENSD_OUT, SEVENSDC
-000056 304c                      	CPI		COUNTER_PORT, 12
-000057 f051                      	BREQ	END
+00004d e356                      	LDI		SEVENSD_OUT, SEVENSDC
+00004e 304c                      	CPI		COUNTER_PORT, 12
+00004f f051                      	BREQ	END
                                  
                                  	// Revisar si el contador es 13	
-000058 e759                      	LDI		SEVENSD_OUT, SEVENSDD
-000059 304d                      	CPI		COUNTER_PORT, 13
-00005a f039                      	BREQ	END
+000050 e759                      	LDI		SEVENSD_OUT, SEVENSDD
+000051 304d                      	CPI		COUNTER_PORT, 13
+000052 f039                      	BREQ	END
                                  
                                  	// Revisar si el contador es 14	
-00005b e35e                      	LDI		SEVENSD_OUT, SEVENSDE
-00005c 304e                      	CPI		COUNTER_PORT, 14
-00005d f021                      	BREQ	END
+000053 e35e                      	LDI		SEVENSD_OUT, SEVENSDE
+000054 304e                      	CPI		COUNTER_PORT, 14
+000055 f021                      	BREQ	END
                                  
                                  	// Revisar si el contador es 15	
-00005e e15e                      	LDI		SEVENSD_OUT, SEVENSDF
-00005f 304f                      	CPI		COUNTER_PORT, 15
-000060 f009                      	BREQ	END
+000056 e15e                      	LDI		SEVENSD_OUT, SEVENSDF
+000057 304f                      	CPI		COUNTER_PORT, 15
+000058 f009                      	BREQ	END
                                  
-000061 9508                      	RET
+000059 9508                      	RET
                                  
                                  
                                  END:
@@ -1296,10 +1265,10 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  28 r17:   3 r18:   0 r19:   0 r20:  21 
+r13:   0 r14:   0 r15:   0 r16:  24 r17:   0 r18:   0 r19:   0 r20:  20 
 r21:  19 r22:   0 r23:   0 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
-Registers used: 4 out of 35 (11.4%)
+Registers used: 3 out of 35 (8.6%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
@@ -1310,23 +1279,23 @@ brne  :   0 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0
 brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :   0 cbr   :   0 
 clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   3 cls   :   0 
 clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :  16 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   2 inc   :   1 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :  29 lds   :   0 lpm   :   0 lsl   :   0 
+cpi   :  16 cpse  :   0 dec   :   0 eor   :   0 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   1 inc   :   1 jmp   :   0 
+ld    :   0 ldd   :   0 ldi   :  27 lds   :   0 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  13 pop   :   0 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  11 pop   :   0 
 push  :   0 rcall :   0 ret   :   3 reti  :   0 rjmp  :   2 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   1 sbic  :   0 sbis  :   0 
-sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   3 sec   :   0 seh   :   0 
+sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   1 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   2 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 15 out of 113 (13.3%)
+Instructions used: 14 out of 113 (12.4%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000c6    198      0    198   32768   0.6%
+[.cseg] 0x000000 0x0000b6    182      0    182   32768   0.6%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 
