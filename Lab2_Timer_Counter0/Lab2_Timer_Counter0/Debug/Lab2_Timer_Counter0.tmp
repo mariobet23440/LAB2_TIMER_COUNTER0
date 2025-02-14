@@ -24,7 +24,7 @@
  </OUTPUT_FILES>
  <LABELS>
   <SETUP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>46</LINE></SETUP>
-  <MAINLOOP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>57</LINE></MAINLOOP>
-  <DELAY><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>60</LINE></DELAY>
+  <INIT_TMR0><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>87</LINE></INIT_TMR0>
+  <MAIN_LOOP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>66</LINE></MAIN_LOOP>
  </LABELS>
 </ASSEMBLER_INFO>
