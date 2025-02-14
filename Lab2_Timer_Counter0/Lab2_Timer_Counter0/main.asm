@@ -4,6 +4,7 @@
 ; Created: 14/02/2025 00:07:08
 ; Author : mario
 ; Link a Github: https://github.com/mariobet23440/LAB2_TIMER_COUNTER0
+; ENTREGA DE PRELAB: 14/02/2025 - 14:01
 
 /*
 CONFIGUACIÓN DE TIMER0
@@ -78,7 +79,7 @@ SETUP:
 	// Configurar Prescaler Principal
 	LDI		R16, (1 << CLKPCE)
 	STS     CLKPR, R16          // Habilitar cambio de PRESCALER
-    LDI     R16, 0x0F			// CAMBIAR A 0X04
+    LDI     R16, 0x04			// CAMBIAR A 0X04
     STS     CLKPR, R16          // Configurar Prescaler a 1 Mhz
 
 	// Inicializar timer0
