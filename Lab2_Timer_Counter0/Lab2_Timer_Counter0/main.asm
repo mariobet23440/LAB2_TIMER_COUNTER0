@@ -35,7 +35,8 @@ Con este cálculo el contador alcanza 100 ms directamente por cada conteo realiza
 .equ PRESCALER = (1<<CS01) | (1<<CS00)
 .equ TIMER_START = 158                   ; Valor inicial del Timer0
 .equ OVERFLOWS = 10                      ; Cantidad de desbordamientos para 100 ms
-.def COUNTER = R20						 ; REGISTRO A MOSTRAR EN PUERTOS
+.def COUNTER_PORTC = R20				 ; REGISTRO A MOSTRAR EN PUERTO C
+.def COUNTER_PORTD = R21				 ; REGISTRO A MOSTRAR EN PUERTO D
 
 // Lookup Table para Display de 7 Segmentos
 .equ SEVENSD1 =	0b0010_0001
@@ -76,6 +77,10 @@ SETUP:
 	// Inicializar timer0
     CALL    INIT_TMR0
 
+	// Inicializar contadores
+	CLR		COUNTER_PORTC
+	CLR		COUNTER_PORTD
+
 
 MAIN_LOOP:
     // Revisión de la bandera de Overflow en TIMER0
@@ -88,6 +93,12 @@ MAIN_LOOP:
 	LDI     R16, TIMER_START    // Establecer el valor inicial del contador TCNT0
     OUT     TCNT0, R16          // Volver a cargar valor inicial en TCNT0 
     RJMP    MAIN_LOOP			// Regresar a Mainloop
+
+	// PRELAB - Mostrar en LEDs
+	// Contador en PORTC
+	INC		COUNTER_PORTC		// Incrementar el valor de COUNTER_PORTC
+	ANDI	COUNTER_PORTC, 0X0F	// Truncar el valor obtenido a 4 bits
+	OUT		PORTC, COUNTER_PORTC
 
 
 // Inicializar Timer0

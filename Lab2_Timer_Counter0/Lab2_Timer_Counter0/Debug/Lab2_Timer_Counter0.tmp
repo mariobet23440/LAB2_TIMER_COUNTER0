@@ -23,8 +23,8 @@
   <FILE>Lab2_Timer_Counter0.lss</FILE>
  </OUTPUT_FILES>
  <LABELS>
-  <SETUP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>46</LINE></SETUP>
-  <INIT_TMR0><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>87</LINE></INIT_TMR0>
-  <MAIN_LOOP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>66</LINE></MAIN_LOOP>
+  <SETUP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>64</LINE></SETUP>
+  <INIT_TMR0><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>105</LINE></INIT_TMR0>
+  <MAIN_LOOP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm</FILE><LINE>85</LINE></MAIN_LOOP>
  </LABELS>
 </ASSEMBLER_INFO>
