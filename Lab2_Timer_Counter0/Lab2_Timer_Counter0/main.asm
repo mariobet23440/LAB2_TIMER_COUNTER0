@@ -32,7 +32,7 @@ Con este cálculo el contador alcanza 100 ms directamente por cada conteo realiza
 .org    0x0000
 
 // Definiciones
-.equ PRESCALER = (1<<CS01) | (1<<CS00)
+.equ PRESCALER = (1<<CS02) | (1<<CS00)	 ; Prescaler de TIMER0 (En este caso debe ser de 1024)
 .equ TIMER_START = 158                   ; Valor inicial del Timer0
 .equ OVERFLOWS = 10                      ; Cantidad de desbordamientos para 100 ms
 .def COUNTER_PORTC = R20				 ; REGISTRO A MOSTRAR EN PUERTO C
@@ -92,7 +92,6 @@ MAIN_LOOP:
 	SBI     TIFR0, TOV0         // Limpiar bandera de "overflow" (No se limpia automáticamente)
 	LDI     R16, TIMER_START    // Establecer el valor inicial del contador TCNT0
     OUT     TCNT0, R16          // Volver a cargar valor inicial en TCNT0 
-    RJMP    MAIN_LOOP			// Regresar a Mainloop
 
 	// PRELAB - Mostrar en LEDs
 	// Contador en PORTC
@@ -100,6 +99,7 @@ MAIN_LOOP:
 	ANDI	COUNTER_PORTC, 0X0F	// Truncar el valor obtenido a 4 bits
 	OUT		PORTC, COUNTER_PORTC
 
+	RJMP    MAIN_LOOP			// Regresar a Mainloop
 
 // Inicializar Timer0
 INIT_TMR0:

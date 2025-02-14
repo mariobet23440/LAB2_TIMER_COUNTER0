@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm Fri Feb 14 13:32:42 2025
+AVRASM ver. 2.2.8  C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm Fri Feb 14 13:38:00 2025
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\Lab2_Timer_Counter0\main.asm(30): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1063,7 +1063,7 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\La
                                  .org    0x0000
                                  
                                  // Definiciones
-                                 .equ PRESCALER = (1<<CS01) | (1<<CS00)
+                                 .equ PRESCALER = (1<<CS02) | (1<<CS00)	 ; Prescaler de TIMER0 (En este caso debe ser de 1024)
                                  .equ TIMER_START = 158                   ; Valor inicial del Timer0
                                  .equ OVERFLOWS = 10                      ; Cantidad de desbordamientos para 100 ms
                                  .def COUNTER_PORTC = R20				 ; REGISTRO A MOSTRAR EN PUERTO C
@@ -1123,18 +1123,18 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Lab2_Timer_Counter0\La
 000015 9aa8                      	SBI     TIFR0, TOV0         // Limpiar bandera de "overflow" (No se limpia automáticamente)
 000016 e90e                      	LDI     R16, TIMER_START    // Establecer el valor inicial del contador TCNT0
 000017 bd06                          OUT     TCNT0, R16          // Volver a cargar valor inicial en TCNT0 
-000018 cff9                          RJMP    MAIN_LOOP			// Regresar a Mainloop
                                  
                                  	// PRELAB - Mostrar en LEDs
                                  	// Contador en PORTC
-000019 9543                      	INC		COUNTER_PORTC		// Incrementar el valor de COUNTER_PORTC
-00001a 704f                      	ANDI	COUNTER_PORTC, 0X0F	// Truncar el valor obtenido a 4 bits
-00001b b948                      	OUT		PORTC, COUNTER_PORTC
+000018 9543                      	INC		COUNTER_PORTC		// Incrementar el valor de COUNTER_PORTC
+000019 704f                      	ANDI	COUNTER_PORTC, 0X0F	// Truncar el valor obtenido a 4 bits
+00001a b948                      	OUT		PORTC, COUNTER_PORTC
                                  
+00001b cff6                      	RJMP    MAIN_LOOP			// Regresar a Mainloop
                                  
                                  // Inicializar Timer0
                                  INIT_TMR0:
-00001c e003                          LDI     R16, PRESCALER				// Configurar un registro para setear las posiciones de CS01 y CS00
+00001c e005                          LDI     R16, PRESCALER				// Configurar un registro para setear las posiciones de CS01 y CS00
 00001d bd05                          OUT     TCCR0B, R16					// Setear prescaler del TIMER0 a 64 (CS01 = 1 y CS00 = 0)
 00001e e90e                          LDI     R16, TIMER_START			// Empezar el conteo con un valor de 100
 00001f bd06                          OUT     TCNT0, R16					// Cargar valor inicial en TCNT0
