@@ -3,7 +3,7 @@
 ;
 ; Created: 14/02/2025 00:07:08
 ; Author : mario
-;
+; Link a Github: https://github.com/mariobet23440/LAB2_TIMER_COUNTER0
 
 /*
 CONFIGUACIÓN DE TIMER0
@@ -35,10 +35,11 @@ Con este cálculo el contador alcanza 100 ms directamente por cada conteo realiza
 .equ PRESCALER = (1<<CS02) | (1<<CS00)	 ; Prescaler de TIMER0 (En este caso debe ser de 1024)
 .equ TIMER_START = 158                   ; Valor inicial del Timer0
 .equ OVERFLOWS = 10                      ; Cantidad de desbordamientos para 100 ms
-.def COUNTER_PORTC = R20				 ; REGISTRO A MOSTRAR EN PUERTO C
-.def COUNTER_PORTD = R21				 ; REGISTRO A MOSTRAR EN PUERTO D
+.def COUNTER_PORT = R20					 ; REGISTRO A MOSTRAR EN PUERTOS
+.def SEVENSD_OUT = R21					 ; Registro temporal
 
 // Lookup Table para Display de 7 Segmentos
+.equ SEVENSD0 =	0b0111_0111
 .equ SEVENSD1 =	0b0010_0001
 .equ SEVENSD2 =	0b0011_1011
 .equ SEVENSD3 =	0b0110_1011
@@ -62,11 +63,17 @@ LDI     R16, HIGH(RAMEND)
 OUT     SPH, R16
 
 SETUP:
-    // Activación de pines de entrada y salida en el puerto C
+	// Activación de pines de entrada y salida en el puerto C
     LDI     R16, 0x0F	// Primeros cuatro bits como salidas y los primeros dos bits como entradas
     OUT     DDRC, R16
     LDI     R16, 0xF0	// Activar Pull-ups en entradas y desactivar salidas inicialmente
     OUT     PORTC, R16
+
+	// Activación de pines de salida en el puerto D
+    LDI     R16, 0xFF	// Primeros cuatro bits como salidas y los primeros dos bits como entradas
+    OUT     DDRD, R16
+    LDI     R16, 0x00	// Desactivar salidas inicialmente
+    OUT     PORTD, R16
 
 	// Configurar Prescaler Principal
 	LDI		R16, (1 << CLKPCE)
@@ -77,9 +84,9 @@ SETUP:
 	// Inicializar timer0
     CALL    INIT_TMR0
 
-	// Inicializar contadores
-	CLR		COUNTER_PORTC
-	CLR		COUNTER_PORTD
+	// Inicializar GPRs
+	CLR		COUNTER_PORT
+	CLR		SEVENSSD_OUT
 
 
 MAIN_LOOP:
@@ -95,11 +102,17 @@ MAIN_LOOP:
 
 	// PRELAB - Mostrar en LEDs
 	// Contador en PORTC
-	INC		COUNTER_PORTC		// Incrementar el valor de COUNTER_PORTC
-	ANDI	COUNTER_PORTC, 0X0F	// Truncar el valor obtenido a 4 bits
-	OUT		PORTC, COUNTER_PORTC
+	INC		COUNTER_PORT			// Incrementar el valor de COUNTER_PORTC
+	ANDI	COUNTER_PORT, 0X0F		// Truncar el valor obtenido a 4 bits
+	OUT		PORTC, COUNTER_PORT	// Mostrar el resultado en PORTC
+
+	// Mostrar en display de 7 segmentos
+	CALL	SEVEN_SEGMENT_DISPLAY
+	OUT		PORTD, TEMP
 
 	RJMP    MAIN_LOOP			// Regresar a Mainloop
+
+// RUTINAS NO DE INTERRUPCIÓN
 
 // Inicializar Timer0
 INIT_TMR0:
@@ -109,4 +122,96 @@ INIT_TMR0:
     OUT     TCNT0, R16					// Cargar valor inicial en TCNT0
     RET
 
-		
+// Display de 7 segmentos
+/*
+En esta parte revisamos el valor del contador del puerto haciendo un compare con el valor que se va a mostrar en 
+el display de 7 segmentos. Si el compare activa la bandera Z el programa regresará a MAINLOOP
+*/
+SEVEN_SEGMENT_DISPLAY:
+	CLR		SEVENSSD_OUT	
+	
+	// Revisar si el contador es 0	
+	LDI		SEVENSSD_OUT, SEVENSD0
+	CPI		COUNTER_PORT, 0
+	BREQ	END
+
+	// Revisar si el contador es 1	
+	LDI		SEVENSSD_OUT, SEVENSD1
+	CPI		COUNTER_PORT, 1
+	BREQ	END
+
+	// Revisar si el contador es 2	
+	LDI		SEVENSSD_OUT, SEVENSD2
+	CPI		COUNTER_PORT, 2
+	BREQ	END
+
+	// Revisar si el contador es 3	
+	LDI		SEVENSSD_OUT, SEVENSD3
+	CPI		COUNTER_PORT, 3
+	BREQ	END
+
+	// Revisar si el contador es 4
+	LDI		SEVENSSD_OUT, SEVENSD4
+	CPI		COUNTER_PORT, 4
+	BREQ	END
+
+	// Revisar si el contador es 5	
+	LDI		SEVENSSD_OUT, SEVENSD5
+	CPI		COUNTER_PORT, 5
+	BREQ	END
+
+	// Revisar si el contador es 6	
+	LDI		SEVENSSD_OUT, SEVENSD6
+	CPI		COUNTER_PORT, 6
+	BREQ	END
+
+	// Revisar si el contador es 0	
+	LDI		SEVENSSD_OUT, SEVENSD7
+	CPI		COUNTER_PORT, 7
+	BREQ	END
+
+	// Revisar si el contador es 8	
+	LDI		SEVENSSD_OUT, SEVENSD8
+	CPI		COUNTER_PORT, 8
+	BREQ	END
+
+	// Revisar si el contador es 9	
+	LDI		SEVENSSD_OUT, SEVENSD9
+	CPI		COUNTER_PORT, 9
+	BREQ	END
+
+	// Revisar si el contador es A	
+	LDI		SEVENSSD_OUT, SEVENSDA
+	CPI		COUNTER_PORT, 10
+	BREQ	END
+
+	// Revisar si el contador es B	
+	LDI		SEVENSSD_OUT, SEVENSDB
+	CPI		COUNTER_PORT, 11
+	BREQ	END
+
+	// Revisar si el contador es 12	
+	LDI		SEVENSSD_OUT, SEVENSDC
+	CPI		COUNTER_PORT, 12
+	BREQ	END
+
+	// Revisar si el contador es 13	
+	LDI		SEVENSSD_OUT, SEVENSDD
+	CPI		COUNTER_PORT, 13
+	BREQ	END
+
+	// Revisar si el contador es 14	
+	LDI		SEVENSSD_OUT, SEVENSDE
+	CPI		COUNTER_PORT, 14
+	BREQ	END
+
+	// Revisar si el contador es 15	
+	LDI		SEVENSSD_OUT, SEVENSDF
+	CPI		COUNTER_PORT, 15
+	BREQ	END
+
+	RET
+
+
+END:
+	RET
