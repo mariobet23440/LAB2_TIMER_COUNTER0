@@ -18,24 +18,41 @@ ENTREGA DE LAB: 14/02/2024 - 18:55
 
 
 /*
-CONFIGUACIÓN DE TIMER0 (Es diferente respecto al PRELAB)
-Vamos a disminuir el tiempo del delay a 20 ms (El tiempo que tarda un botón en dejar de rebotar)
+CONFIGUACIÓN DE TIMER0
 Estamos usando TIMER0 como un temporizador en modo NORMAL. 
 t_delay = 20 ms
-f_clk = 1 MHz
+f_clk = 4 MHz
 n = 8 (Recordemos que es el número de bits del registro del *contador*)
 
-Prescaler >= (t_delay * f_clk) / 2**n = (0.02*10E6)(2POW(8)) = 78.125
-Prescaler >= 78
-Escogemos un prescaler de 128 (0111)
+
+Prescaler >= (t_delay * f_clk) / 2**n = (0.02)*(4*10E6)/(2POW(8)) = 312.5
+Prescaler >= 313
+Escogemos un prescaler de 1024
 
 Calculamos el tiempo máximo que puede contar TIMER0
-Tmax = (2**n * Prescaler) / f_clk = (2**8 * 1024) / 10E6 = 0.03s = 32 ms 
+Tmax = (2**n * Prescaler) / f_clk = (2**8 * 1024) / 4 * 10E6 = 0.655s = 65.5 ms 
 
 Determinamos el valor inicial de TIMER0
-TCNT0 = 256 - (f_clk * t_deseado) / Prescaler = 256 - (10E6 * 0.02) / 128 = 99.75 = 100
 
-Con este cálculo el contador alcanza 100 ms directamente por cada conteo realizado.
+Si deseamos un delay de 20 ms
+TCNT0 = 256 - (f_clk * t_deseado) / Prescaler = 256 - (4*10E6) * (0.05) / 1024 = 178
+
+Si deseamos un delay de 50 ms
+TCNT0 = 256 - (f_clk * t_deseado) / Prescaler = 256 - (4*10E6) * (0.05) / 1024 = 61
+
+Si deseamos un delay de 100 ms
+TCNT0 = 256 - (f_clk * t_deseado) / Prescaler = 256 - (4*10E6) * (0.1) / 1024 = -134 (IMPOSIBLE)
+
+Por rapidez y comodidad usaremos un delay de 50 ms
+
+Para lograr 100 ms podríamos usar esta configuración
+f_clk = 1 MHz
+prescaler = 1024
+Tmax = 0.26 s = 262 ms
+TCNT0 = 158 para obtener un
+t_deseado = 0.100 s = 100 ms
+
+Esta fue la configuración del system clock utilizada en el prelaboratorio
 */
 
 
@@ -45,8 +62,8 @@ Con este cálculo el contador alcanza 100 ms directamente por cada conteo realiza
 .org    0x0000
 
 // Definiciones
-.equ PRESCALER = (1<<CS02) |(1<<CS01) | (1<<CS00)	; Prescaler de TIMER0 (En este caso debe ser de 128)
-.equ TIMER_START = 100								; Valor inicial del Timer0
+.equ PRESCALER = (1<<CS02) | (1<<CS00)				; Prescaler de TIMER0 (En este caso debe ser de 1024)
+.equ TIMER_START = 158								; Valor inicial del Timer0
 .def COUNTER_PORT = R20								; REGISTRO A MOSTRAR EN PUERTOS
 .def SEVENSD_OUT = R21								; Registro temporal
 
