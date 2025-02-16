@@ -38,6 +38,7 @@ POSTLAB
 .def COUNTER_TEMP = R22								; Contador temporal (Para contador de segundos)
 .def COUNTER_SECONDS = R23
 .def SEVENSD_OUT = R21								; Registro temporal
+.def COUNTER_COUNTER = R24							; Contador adicional
 
 // Lookup Table para Display de 7 Segmentos
 .equ SEVENSD0 =	0b0111_0111
@@ -97,7 +98,7 @@ SETUP:
 	CLR		COUNTER_SECONDS
 	CLR		COUNTER_BUTTON
 	CLR		SEVENSD_OUT
-
+	CLR		COUNTER_COUNTER
 
 MAIN_LOOP:
     // Revisión de la bandera de Overflow en TIMER0
@@ -129,28 +130,29 @@ MAIN_LOOP:
 	BREQ    CONTADOR_SEGUNDOS           ; Si COUNTER_TEMP = 10 ir a CONTADOR_SEGUNDOS
 	RJMP    MAIN_LOOP                   ; Vuelve al loop principal
 
-CONTADOR_SEGUNDOS: 
-    CP      COUNTER_SECONDS, COUNTER_BUTTON
-    BREQ    RESET_CONTADOR
+// RUTINAS NO DE INTERRUPCIÓN
 
-    INC     COUNTER_SECONDS
-    ANDI    COUNTER_SECONDS, 0x1F
-    OUT     PORTC, COUNTER_SECONDS  ; Mostrar en LEDs
+// Contador de Segundos
+CONTADOR_SEGUNDOS: 
+	OUT     PORTC, COUNTER_SECONDS  // Si no se hace un reset, se muestra el valor del contador
+	INC     COUNTER_SECONDS			// Incrementar el valor del contador de segundos
+    ANDI    COUNTER_SECONDS, 0x1F	// Aplicar una máscara de 5 bits
+	MOV		R16, COUNTER_SECONDS	// Copiamos el registro en R16
+	ANDI	R16, 0X0F				// Truncamos el valor a 4 bits antes de la comparación
+    CP      R16, COUNTER_BUTTON		// Si el valor del contador de segundos es igual al del display hacer un reset
+    BREQ    RESET_CONTADOR
     RJMP    MAIN_LOOP
 
 RESET_CONTADOR:
-    IN      R25, PINC        ; Leer el estado actual de PORTC
-    LDI     R24, (1 << PC5)   ; Máscara para PC5
-    EOR     R25, R24          ; Alternar el bit PC5
-    OUT     PORTC, R25        ; Guardar el nuevo estado en PORTC
-
-    CLR     COUNTER_SECONDS   ; Reiniciar el contador
-    OUT     PORTC, COUNTER_SECONDS  ; Mostrar en LEDs
-    RJMP    MAIN_LOOP
-
+	CLR		COUNTER_SECONDS
+	INC		COUNTER_COUNTER
+	MOV		R16, COUNTER_COUNTER
+	SWAP	R16
+	OR		COUNTER_SECONDS, R16
+	RJMP	MAIN_LOOP
 	
 
-// RUTINAS NO DE INTERRUPCIÓN
+
 
 // Inicializar Timer0
 INIT_TMR0:
