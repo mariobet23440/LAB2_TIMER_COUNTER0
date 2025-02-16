@@ -1,5 +1,5 @@
 
-AVRASM ver. 2.2.8  C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm Sun Feb 16 15:43:04 2025
+AVRASM ver. 2.2.8  C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm Sun Feb 16 16:58:03 2025
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
 C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm(30): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
@@ -1121,7 +1121,7 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_Time
 000014 9300 0061                     STS     CLKPR, R16          // Configurar Prescaler a 1 Mhz
                                  
                                  	// Inicializar timer0
-000016 940e 0034                     CALL    INIT_TMR0
+000016 940e 003d                     CALL    INIT_TMR0
                                  
                                  	// Inicializar GPRs
 000018 2766                      	CLR		COUNTER_TEMP
@@ -1150,32 +1150,46 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_Time
 000027 704f                      	ANDI	COUNTER_BUTTON, 0X0F
                                  
                                  	// Mostrar en display de 7 segmentos
-000028 940e 0039                 	CALL	SEVEN_SEGMENT_DISPLAY
+000028 940e 0042                 	CALL	SEVEN_SEGMENT_DISPLAY
 00002a b95b                      	OUT		PORTD, SEVENSD_OUT
                                  
                                  	// Incrementar el valor del contador de segundos
 00002b 9563                      	INC		COUNTER_TEMP
 00002c 706f                      	ANDI	COUNTER_TEMP, 0X0F
-00002d 306a                      	CPI     COUNTER_TEMP, 10         ; Si COUNTER_TEMP alcanza 10 habrá transcurrido 1s. Levantamos Z
+00002d 306a                      	CPI     COUNTER_TEMP, 10			; Si COUNTER_TEMP alcanza 10 habrá transcurrido 1s. Levantamos Z
 00002e f009                      	BREQ    CONTADOR_SEGUNDOS           ; Si COUNTER_TEMP = 10 ir a CONTADOR_SEGUNDOS
 00002f cfec                      	RJMP    MAIN_LOOP                   ; Vuelve al loop principal
                                  
-                                 CONTADOR_SEGUNDOS:
-000030 9573                      	INC		COUNTER_SECONDS
-000031 707f                      	ANDI	COUNTER_SECONDS, 0X0F
-000032 b978                      	OUT     PORTC, COUNTER_SECONDS      ; Muestra el valor en los LEDs (antes de resetear)
-000033 cfe8                      	RJMP	MAIN_LOOP
+                                 CONTADOR_SEGUNDOS: 
+000030 1774                          CP      COUNTER_SECONDS, COUNTER_BUTTON
+000031 f021                          BREQ    RESET_CONTADOR
+                                 
+000032 9573                          INC     COUNTER_SECONDS
+000033 717f                          ANDI    COUNTER_SECONDS, 0x1F
+000034 b978                          OUT     PORTC, COUNTER_SECONDS  ; Mostrar en LEDs
+000035 cfe6                          RJMP    MAIN_LOOP
+                                 
+                                 RESET_CONTADOR:
+000036 b196                          IN      R25, PINC        ; Leer el estado actual de PORTC
+000037 e280                          LDI     R24, (1 << PC5)   ; Máscara para PC5
+000038 2798                          EOR     R25, R24          ; Alternar el bit PC5
+000039 b998                          OUT     PORTC, R25        ; Guardar el nuevo estado en PORTC
+                                 
+00003a 2777                          CLR     COUNTER_SECONDS   ; Reiniciar el contador
+00003b b978                          OUT     PORTC, COUNTER_SECONDS  ; Mostrar en LEDs
+00003c cfdf                          RJMP    MAIN_LOOP
+                                 
                                  	
                                  
                                  // RUTINAS NO DE INTERRUPCIÓN
                                  
                                  // Inicializar Timer0
                                  INIT_TMR0:
-000034 e005                          LDI     R16, PRESCALER				// Configurar un registro para setear las posiciones de CS01 y CS00
-000035 bd05                          OUT     TCCR0B, R16					// Setear prescaler del TIMER0 a 64 (CS01 = 1 y CS00 = 0)
-000036 e90e                          LDI     R16, TIMER_START			// Empezar el conteo con un valor de 100
-000037 bd06                          OUT     TCNT0, R16					// Cargar valor inicial en TCNT0
-000038 9508                          RET
+00003d e005                          LDI     R16, PRESCALER				// Configurar un registro para setear las posiciones de CS01 y CS00
+00003e bd05                          OUT     TCCR0B, R16					// Setear prescaler del TIMER0 a 64 (CS01 = 1 y CS00 = 0)
+00003f e90e                          LDI     R16, TIMER_START			// Empezar el conteo con un valor de 100
+000040 bd06                          OUT     TCNT0, R16					// Cargar valor inicial en TCNT0
+000041 9508                          RET
                                  
                                  // Display de 7 segmentos
                                  /*
@@ -1183,89 +1197,89 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_Time
                                  el display de 7 segmentos. Si el compare activa la bandera Z el programa regresará a MAINLOOP
                                  */
                                  SEVEN_SEGMENT_DISPLAY:
-000039 2755                      	CLR		SEVENSD_OUT	
+000042 2755                      	CLR		SEVENSD_OUT	
                                  	
                                  	// Revisar si el contador es 0	
-00003a e757                      	LDI		SEVENSD_OUT, SEVENSD0
-00003b 3040                      	CPI		COUNTER_BUTTON, 0
-00003c f171                      	BREQ	END
+000043 e757                      	LDI		SEVENSD_OUT, SEVENSD0
+000044 3040                      	CPI		COUNTER_BUTTON, 0
+000045 f171                      	BREQ	END
                                  
                                  	// Revisar si el contador es 1	
-00003d e451                      	LDI		SEVENSD_OUT, SEVENSD1
-00003e 3041                      	CPI		COUNTER_BUTTON, 1
-00003f f159                      	BREQ	END
+000046 e451                      	LDI		SEVENSD_OUT, SEVENSD1
+000047 3041                      	CPI		COUNTER_BUTTON, 1
+000048 f159                      	BREQ	END
                                  
                                  	// Revisar si el contador es 2	
-000040 e35b                      	LDI		SEVENSD_OUT, SEVENSD2
-000041 3042                      	CPI		COUNTER_BUTTON, 2
-000042 f141                      	BREQ	END
+000049 e35b                      	LDI		SEVENSD_OUT, SEVENSD2
+00004a 3042                      	CPI		COUNTER_BUTTON, 2
+00004b f141                      	BREQ	END
                                  
                                  	// Revisar si el contador es 3	
-000043 e65b                      	LDI		SEVENSD_OUT, SEVENSD3
-000044 3043                      	CPI		COUNTER_BUTTON, 3
-000045 f129                      	BREQ	END
+00004c e65b                      	LDI		SEVENSD_OUT, SEVENSD3
+00004d 3043                      	CPI		COUNTER_BUTTON, 3
+00004e f129                      	BREQ	END
                                  
                                  	// Revisar si el contador es 4
-000046 e45d                      	LDI		SEVENSD_OUT, SEVENSD4
-000047 3044                      	CPI		COUNTER_BUTTON, 4
-000048 f111                      	BREQ	END
+00004f e45d                      	LDI		SEVENSD_OUT, SEVENSD4
+000050 3044                      	CPI		COUNTER_BUTTON, 4
+000051 f111                      	BREQ	END
                                  
                                  	// Revisar si el contador es 5	
-000049 e65e                      	LDI		SEVENSD_OUT, SEVENSD5
-00004a 3045                      	CPI		COUNTER_BUTTON, 5
-00004b f0f9                      	BREQ	END
+000052 e65e                      	LDI		SEVENSD_OUT, SEVENSD5
+000053 3045                      	CPI		COUNTER_BUTTON, 5
+000054 f0f9                      	BREQ	END
                                  
                                  	// Revisar si el contador es 6	
-00004c e75e                      	LDI		SEVENSD_OUT, SEVENSD6
-00004d 3046                      	CPI		COUNTER_BUTTON, 6
-00004e f0e1                      	BREQ	END
+000055 e75e                      	LDI		SEVENSD_OUT, SEVENSD6
+000056 3046                      	CPI		COUNTER_BUTTON, 6
+000057 f0e1                      	BREQ	END
                                  
                                  	// Revisar si el contador es 0	
-00004f e453                      	LDI		SEVENSD_OUT, SEVENSD7
-000050 3047                      	CPI		COUNTER_BUTTON, 7
-000051 f0c9                      	BREQ	END
+000058 e453                      	LDI		SEVENSD_OUT, SEVENSD7
+000059 3047                      	CPI		COUNTER_BUTTON, 7
+00005a f0c9                      	BREQ	END
                                  
                                  	// Revisar si el contador es 8	
-000052 e75f                      	LDI		SEVENSD_OUT, SEVENSD8
-000053 3048                      	CPI		COUNTER_BUTTON, 8
-000054 f0b1                      	BREQ	END
+00005b e75f                      	LDI		SEVENSD_OUT, SEVENSD8
+00005c 3048                      	CPI		COUNTER_BUTTON, 8
+00005d f0b1                      	BREQ	END
                                  
                                  	// Revisar si el contador es 9	
-000055 e45f                      	LDI		SEVENSD_OUT, SEVENSD9
-000056 3049                      	CPI		COUNTER_BUTTON, 9
-000057 f099                      	BREQ	END
+00005e e45f                      	LDI		SEVENSD_OUT, SEVENSD9
+00005f 3049                      	CPI		COUNTER_BUTTON, 9
+000060 f099                      	BREQ	END
                                  
                                  	// Revisar si el contador es A	
-000058 e55f                      	LDI		SEVENSD_OUT, SEVENSDA
-000059 304a                      	CPI		COUNTER_BUTTON, 10
-00005a f081                      	BREQ	END
+000061 e55f                      	LDI		SEVENSD_OUT, SEVENSDA
+000062 304a                      	CPI		COUNTER_BUTTON, 10
+000063 f081                      	BREQ	END
                                  
                                  	// Revisar si el contador es B	
-00005b e75c                      	LDI		SEVENSD_OUT, SEVENSDB
-00005c 304b                      	CPI		COUNTER_BUTTON, 11
-00005d f069                      	BREQ	END
+000064 e75c                      	LDI		SEVENSD_OUT, SEVENSDB
+000065 304b                      	CPI		COUNTER_BUTTON, 11
+000066 f069                      	BREQ	END
                                  
                                  	// Revisar si el contador es 12	
-00005e e356                      	LDI		SEVENSD_OUT, SEVENSDC
-00005f 304c                      	CPI		COUNTER_BUTTON, 12
-000060 f051                      	BREQ	END
+000067 e356                      	LDI		SEVENSD_OUT, SEVENSDC
+000068 304c                      	CPI		COUNTER_BUTTON, 12
+000069 f051                      	BREQ	END
                                  
                                  	// Revisar si el contador es 13	
-000061 e759                      	LDI		SEVENSD_OUT, SEVENSDD
-000062 304d                      	CPI		COUNTER_BUTTON, 13
-000063 f039                      	BREQ	END
+00006a e759                      	LDI		SEVENSD_OUT, SEVENSDD
+00006b 304d                      	CPI		COUNTER_BUTTON, 13
+00006c f039                      	BREQ	END
                                  
                                  	// Revisar si el contador es 14	
-000064 e35e                      	LDI		SEVENSD_OUT, SEVENSDE
-000065 304e                      	CPI		COUNTER_BUTTON, 14
-000066 f021                      	BREQ	END
+00006d e35e                      	LDI		SEVENSD_OUT, SEVENSDE
+00006e 304e                      	CPI		COUNTER_BUTTON, 14
+00006f f021                      	BREQ	END
                                  
                                  	// Revisar si el contador es 15	
-000067 e15e                      	LDI		SEVENSD_OUT, SEVENSDF
-000068 304f                      	CPI		COUNTER_BUTTON, 15
-000069 f009                      	BREQ	END
+000070 e15e                      	LDI		SEVENSD_OUT, SEVENSDF
+000071 304f                      	CPI		COUNTER_BUTTON, 15
+000072 f009                      	BREQ	END
                                  
-00006a 9508                      	RET
+000073 9508                      	RET
                                  
                                  
                                  END:
@@ -1288,37 +1302,37 @@ counted separately from r26..r31 here.
 "ATmega328P" register use summary:
 x  :   0 y  :   0 z  :   0 r0 :   0 r1 :   0 r2 :   0 r3 :   0 r4 :   0 
 r5 :   0 r6 :   0 r7 :   0 r8 :   0 r9 :   0 r10:   0 r11:   0 r12:   0 
-r13:   0 r14:   0 r15:   0 r16:  28 r17:   3 r18:   0 r19:   0 r20:  20 
-r21:  19 r22:   4 r23:   4 r24:   0 r25:   0 r26:   0 r27:   0 r28:   0 
+r13:   0 r14:   0 r15:   0 r16:  28 r17:   3 r18:   0 r19:   0 r20:  21 
+r21:  19 r22:   4 r23:   7 r24:   2 r25:   3 r26:   0 r27:   0 r28:   0 
 r29:   0 r30:   0 r31:   0 
-Registers used: 6 out of 35 (17.1%)
+Registers used: 8 out of 35 (22.9%)
 
 "ATmega328P" instruction use summary:
 .lds  :   0 .sts  :   0 adc   :   0 add   :   0 adiw  :   0 and   :   0 
 andi  :   3 asr   :   0 bclr  :   0 bld   :   0 brbc  :   0 brbs  :   0 
-brcc  :   0 brcs  :   0 break :   0 breq  :  17 brge  :   0 brhc  :   0 
+brcc  :   0 brcs  :   0 break :   0 breq  :  18 brge  :   0 brhc  :   0 
 brhs  :   0 brid  :   0 brie  :   0 brlo  :   0 brlt  :   0 brmi  :   0 
 brne  :   0 brpl  :   0 brsh  :   0 brtc  :   0 brts  :   0 brvc  :   0 
 brvs  :   0 bset  :   0 bst   :   0 call  :   2 cbi   :   0 cbr   :   0 
-clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   5 cls   :   0 
-clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   0 cpc   :   0 
-cpi   :  17 cpse  :   0 dec   :   1 eor   :   0 fmul  :   0 fmuls :   0 
-fmulsu:   0 icall :   0 ijmp  :   0 in    :   2 inc   :   3 jmp   :   0 
-ld    :   0 ldd   :   0 ldi   :  29 lds   :   0 lpm   :   0 lsl   :   0 
+clc   :   0 clh   :   0 cli   :   0 cln   :   0 clr   :   6 cls   :   0 
+clt   :   0 clv   :   0 clz   :   0 com   :   0 cp    :   1 cpc   :   0 
+cpi   :  17 cpse  :   0 dec   :   1 eor   :   1 fmul  :   0 fmuls :   0 
+fmulsu:   0 icall :   0 ijmp  :   0 in    :   3 inc   :   3 jmp   :   0 
+ld    :   0 ldd   :   0 ldi   :  30 lds   :   0 lpm   :   0 lsl   :   0 
 lsr   :   0 mov   :   0 movw  :   0 mul   :   0 muls  :   0 mulsu :   0 
-neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  13 pop   :   0 
-push  :   0 rcall :   0 ret   :   3 reti  :   0 rjmp  :   3 rol   :   0 
+neg   :   0 nop   :   0 or    :   0 ori   :   0 out   :  15 pop   :   0 
+push  :   0 rcall :   0 ret   :   3 reti  :   0 rjmp  :   4 rol   :   0 
 ror   :   0 sbc   :   0 sbci  :   0 sbi   :   1 sbic  :   0 sbis  :   0 
 sbiw  :   0 sbr   :   0 sbrc  :   0 sbrs  :   3 sec   :   0 seh   :   0 
 sei   :   0 sen   :   0 ser   :   0 ses   :   0 set   :   0 sev   :   0 
 sez   :   0 sleep :   0 spm   :   0 st    :   0 std   :   0 sts   :   2 
 sub   :   0 subi  :   0 swap  :   0 tst   :   0 wdr   :   0 
-Instructions used: 15 out of 113 (13.3%)
+Instructions used: 17 out of 113 (15.0%)
 
 "ATmega328P" memory use summary [bytes]:
 Segment   Begin    End      Code   Data   Used    Size   Use%
 ---------------------------------------------------------------
-[.cseg] 0x000000 0x0000d8    216      0    216   32768   0.7%
+[.cseg] 0x000000 0x0000ea    234      0    234   32768   0.7%
 [.dseg] 0x000100 0x000100      0      0      0    2048   0.0%
 [.eseg] 0x000000 0x000000      0      0      0    1024   0.0%
 

@@ -24,10 +24,11 @@
  </OUTPUT_FILES>
  <LABELS>
   <SETUP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>66</LINE></SETUP>
-  <INIT_TMR0><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>142</LINE></INIT_TMR0>
+  <INIT_TMR0><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>156</LINE></INIT_TMR0>
   <MAIN_LOOP><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>102</LINE></MAIN_LOOP>
-  <SEVEN_SEGMENT_DISPLAY><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>154</LINE></SEVEN_SEGMENT_DISPLAY>
+  <SEVEN_SEGMENT_DISPLAY><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>168</LINE></SEVEN_SEGMENT_DISPLAY>
   <CONTADOR_SEGUNDOS><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>132</LINE></CONTADOR_SEGUNDOS>
-  <END><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>240</LINE></END>
+  <RESET_CONTADOR><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>141</LINE></RESET_CONTADOR>
+  <END><FILE>C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm</FILE><LINE>254</LINE></END>
  </LABELS>
 </ASSEMBLER_INFO>

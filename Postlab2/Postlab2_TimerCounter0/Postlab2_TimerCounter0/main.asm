@@ -125,15 +125,29 @@ MAIN_LOOP:
 	// Incrementar el valor del contador de segundos
 	INC		COUNTER_TEMP
 	ANDI	COUNTER_TEMP, 0X0F
-	CPI     COUNTER_TEMP, 10         ; Si COUNTER_TEMP alcanza 10 habrá transcurrido 1s. Levantamos Z
+	CPI     COUNTER_TEMP, 10			; Si COUNTER_TEMP alcanza 10 habrá transcurrido 1s. Levantamos Z
 	BREQ    CONTADOR_SEGUNDOS           ; Si COUNTER_TEMP = 10 ir a CONTADOR_SEGUNDOS
 	RJMP    MAIN_LOOP                   ; Vuelve al loop principal
 
-CONTADOR_SEGUNDOS:
-	INC		COUNTER_SECONDS
-	ANDI	COUNTER_SECONDS, 0X0F
-	OUT     PORTC, COUNTER_SECONDS      ; Muestra el valor en los LEDs (antes de resetear)
-	RJMP	MAIN_LOOP
+CONTADOR_SEGUNDOS: 
+    CP      COUNTER_SECONDS, COUNTER_BUTTON
+    BREQ    RESET_CONTADOR
+
+    INC     COUNTER_SECONDS
+    ANDI    COUNTER_SECONDS, 0x1F
+    OUT     PORTC, COUNTER_SECONDS  ; Mostrar en LEDs
+    RJMP    MAIN_LOOP
+
+RESET_CONTADOR:
+    IN      R25, PINC        ; Leer el estado actual de PORTC
+    LDI     R24, (1 << PC5)   ; Máscara para PC5
+    EOR     R25, R24          ; Alternar el bit PC5
+    OUT     PORTC, R25        ; Guardar el nuevo estado en PORTC
+
+    CLR     COUNTER_SECONDS   ; Reiniciar el contador
+    OUT     PORTC, COUNTER_SECONDS  ; Mostrar en LEDs
+    RJMP    MAIN_LOOP
+
 	
 
 // RUTINAS NO DE INTERRUPCIÓN
