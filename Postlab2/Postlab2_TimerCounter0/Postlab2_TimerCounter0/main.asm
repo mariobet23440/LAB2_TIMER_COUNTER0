@@ -4,6 +4,7 @@
 ; Created: 14/02/2025 00:07:08
 ; Author : mario
 ; Link a Github: https://github.com/mariobet23440/LAB2_TIMER_COUNTER0
+; Link a Yutub: https://youtu.be/qXeYrG3SbIA
 
 /*
 - HISTORIAL DE VERSIONES -

@@ -1,10 +1,10 @@
 
-AVRASM ver. 2.2.8  C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm Sun Feb 16 18:49:43 2025
+AVRASM ver. 2.2.8  C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm Mon Feb 17 00:30:11 2025
 
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm(30): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm(31): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
 [builtin](2): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\m328Pdef.inc'
-C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm(30): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
+C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_TimerCounter0\Postlab2_TimerCounter0\main.asm(31): Including file 'C:/Program Files (x86)\Atmel\Studio\7.0\Packs\atmel\ATmega_DFP\1.7.374\avrasm\inc\M328PDEF.inc'
                                  
                                  ;
                                  
@@ -992,6 +992,7 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_Time
                                  ; Created: 14/02/2025 00:07:08
                                  ; Author : mario
                                  ; Link a Github: https://github.com/mariobet23440/LAB2_TIMER_COUNTER0
+                                 ; Link a Yutub: https://youtu.be/qXeYrG3SbIA
                                  
                                  /*
                                  - HISTORIAL DE VERSIONES -
@@ -1184,7 +1185,7 @@ C:\Programacion-de-Microcontroladores\LAB2_TIMER_COUNTER0\Postlab2\Postlab2_Time
 00003b 2777                      	CLR		COUNTER_SECONDS
 00003c 9583                      	INC		COUNTER_COUNTER
 00003d 2f08                      	MOV		R16, COUNTER_COUNTER
-00003e 700f                      	ANDI	R16, 0X0F
+00003e 7001                      	ANDI	R16, 0X01
 00003f 9502                      	SWAP	R16
 000040 2b70                      	OR		COUNTER_SECONDS, R16
 000041 cfdb                      	RJMP	MAIN_LOOP
