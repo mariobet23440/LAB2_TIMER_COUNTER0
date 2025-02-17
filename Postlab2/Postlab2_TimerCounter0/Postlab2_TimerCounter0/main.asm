@@ -135,12 +135,17 @@ MAIN_LOOP:
 // Contador de Segundos
 CONTADOR_SEGUNDOS: 
 	OUT     PORTC, COUNTER_SECONDS  // Si no se hace un reset, se muestra el valor del contador
+	
 	INC     COUNTER_SECONDS			// Incrementar el valor del contador de segundos
     ANDI    COUNTER_SECONDS, 0x1F	// Aplicar una máscara de 5 bits
 	MOV		R16, COUNTER_SECONDS	// Copiamos el registro en R16
 	ANDI	R16, 0X0F				// Truncamos el valor a 4 bits antes de la comparación
-    CP      R16, COUNTER_BUTTON		// Si el valor del contador de segundos es igual al del display hacer un reset
-    BREQ    RESET_CONTADOR
+
+	MOV		R17, COUNTER_BUTTON
+    SUB     R17, R16				// Si el valor del contador de segundos es mayor que el de botones (Y la resta es negativa, hacer un reset)
+    BRMI    RESET_CONTADOR
+	
+	
     RJMP    MAIN_LOOP
 
 RESET_CONTADOR:
@@ -149,6 +154,7 @@ RESET_CONTADOR:
 	MOV		R16, COUNTER_COUNTER
 	SWAP	R16
 	OR		COUNTER_SECONDS, R16
+	INC		COUNTER_SECONDS
 	RJMP	MAIN_LOOP
 	
 
