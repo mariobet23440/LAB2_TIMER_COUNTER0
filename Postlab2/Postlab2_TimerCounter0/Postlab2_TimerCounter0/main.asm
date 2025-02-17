@@ -145,7 +145,6 @@ CONTADOR_SEGUNDOS:
     SUB     R17, R16				// Si el valor del contador de segundos es mayor que el de botones (Y la resta es negativa, hacer un reset)
     BRMI    RESET_CONTADOR
 	
-	
     RJMP    MAIN_LOOP
 
 RESET_CONTADOR:
@@ -154,8 +153,9 @@ RESET_CONTADOR:
 	MOV		R16, COUNTER_COUNTER
 	SWAP	R16
 	OR		COUNTER_SECONDS, R16
-	INC		COUNTER_SECONDS
 	RJMP	MAIN_LOOP
+
+
 	
 
 
