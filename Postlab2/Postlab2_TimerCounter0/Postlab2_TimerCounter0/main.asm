@@ -56,7 +56,7 @@ POSTLAB
 .equ SEVENSDC =	0b0011_0110
 .equ SEVENSDD =	0b0111_1001
 .equ SEVENSDE =	0b0011_1110
-.equ SEVENSDF =	0b0001_1110
+.equ SEVENSDF =	0b0001_1110 
 
 // Configurar la pila
 LDI     R16, LOW(RAMEND)
@@ -88,7 +88,7 @@ SETUP:
 	LDI		R16, (1 << CLKPCE)
 	STS     CLKPR, R16          // Habilitar cambio de PRESCALER
     LDI     R16, 0x04			// CAMBIAR A 0X04
-    STS     CLKPR, R16          // Configurar Prescaler a 1 Mhz
+    STS     CLKPR, R16          // Configurar Prescaler a 1 MHz
 
 	// Inicializar timer0
     CALL    INIT_TMR0
@@ -134,6 +134,7 @@ MAIN_LOOP:
 
 // Contador de Segundos
 CONTADOR_SEGUNDOS: 
+	CLR		COUNTER_TEMP
 	OUT     PORTC, COUNTER_SECONDS  // Si no se hace un reset, se muestra el valor del contador
 	
 	INC     COUNTER_SECONDS			// Incrementar el valor del contador de segundos
@@ -145,18 +146,17 @@ CONTADOR_SEGUNDOS:
     SUB     R17, R16				// Si el valor del contador de segundos es mayor que el de botones (Y la resta es negativa, hacer un reset)
     BRMI    RESET_CONTADOR
 	
+	
     RJMP    MAIN_LOOP
 
 RESET_CONTADOR:
 	CLR		COUNTER_SECONDS
 	INC		COUNTER_COUNTER
 	MOV		R16, COUNTER_COUNTER
+	ANDI	R16, 0X01
 	SWAP	R16
 	OR		COUNTER_SECONDS, R16
 	RJMP	MAIN_LOOP
-
-
-	
 
 
 
@@ -164,7 +164,7 @@ RESET_CONTADOR:
 INIT_TMR0:
     LDI     R16, PRESCALER				// Configurar un registro para setear las posiciones de CS01 y CS00
     OUT     TCCR0B, R16					// Setear prescaler del TIMER0 a 64 (CS01 = 1 y CS00 = 0)
-    LDI     R16, TIMER_START			// Empezar el conteo con un valor de 100
+    LDI     R16, TIMER_START			// Empezar el conteo con un valor de 158
     OUT     TCNT0, R16					// Cargar valor inicial en TCNT0
     RET
 
